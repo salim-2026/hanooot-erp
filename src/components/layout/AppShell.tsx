@@ -1,11 +1,22 @@
-"use client"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { BarChart3, Boxes, Briefcase, Building2, Folder, Gavel, Home, Mail, MessageSquare, Search, Settings, ShoppingBag, Users } from "lucide-react"
-import { modules, type RouteKey } from "@/data/erp-data"
 
-const icons: Record<RouteKey, React.ReactNode> = { dashboard:<Home size={17}/>, leads:<Search size={17}/>, pipeline:<BarChart3 size={17}/>, sourcing:<Boxes size={17}/>, orders:<ShoppingBag size={17}/>, products:<Briefcase size={17}/>, contacts:<Users size={17}/>, settings:<Settings size={17}/>, messages:<MessageSquare size={17}/>, drive:<Folder size={17}/>, hr:<Building2 size={17}/>, legal:<Gavel size={17}/> }
-export const AppShell = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname()
-  return <div className="min-h-screen flex bg-[#f3f0e9]"><aside className="w-16 bg-[#191917] text-white flex flex-col items-center py-4 gap-4"><div className="size-10 rounded-2xl bg-white text-black grid place-items-center font-black">H</div>{modules.slice(0,8).map((item)=><Link key={item.key} href={`/${item.key}`} className="size-9 rounded-xl grid place-items-center text-white/70 hover:bg-white/10">{icons[item.key]}</Link>)}<Mail className="mt-auto text-white/50" size={18}/></aside><aside className="w-56 border-r border-[#ded9ce] bg-[#ebe7dd] p-4 hidden md:block"><h1 className="text-2xl font-black tracking-tight mb-6">Hanooot <span className="text-xs font-medium">ERP</span></h1><nav className="space-y-1">{modules.map((item)=>{const active=pathname.includes(item.key)||pathname==="/"&&item.key==="dashboard";return <Link key={item.key} href={`/${item.key}`} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${active?"bg-white text-[#2455dc] shadow-sm":"text-[#5f5a51] hover:bg-white/60"}`}>{icons[item.key]}<span>{item.label}</span>{item.count&&<span className="ml-auto rounded-md bg-[#2455dc] px-1.5 py-0.5 text-xs text-white">{item.count}</span>}</Link>})}</nav><div className="mt-20 rounded-xl bg-white/60 p-3 text-xs text-[#6f6a61]"><span className="inline-block size-2 rounded-full bg-emerald-500"/> Facebook sync active<br/>last run 12 min ago</div></aside><main className="flex-1 overflow-x-hidden">{children}</main></div>
-}
+const nav = [
+  ["/dashboard", "Dashboard", "Pulse"], ["/leads", "Leads", "24"], ["/pipeline", "Pipeline", "$84k"], ["/sourcing", "Sourcing", "9"], ["/orders", "Orders", "17"], ["/products", "Products", "128"], ["/contacts", "Contacts", "560"], ["/settings", "Settings", "Admin"], ["/messages", "Messages", "6"], ["/drive", "Drive", "2.4GB"], ["/hr", "HR", "18"], ["/legal", "Legal", "7"]
+]
+
+export const AppShell = ({ children }: { children: React.ReactNode }) => (
+  <div className="min-h-screen bg-[#f4f6f8] text-slate-900">
+    <aside className="fixed inset-y-0 left-0 z-20 flex w-14 flex-col items-center gap-4 bg-slate-950 py-4 text-slate-300">
+      <div className="grid size-9 place-items-center rounded-xl bg-blue-600 font-bold text-white">H</div>
+      {["⌂", "◎", "▦", "▣", "▤", "⚙"].map((icon) => <div key={icon} className="grid size-9 place-items-center rounded-xl bg-slate-900">{icon}</div>)}
+    </aside>
+    <aside className="fixed inset-y-0 left-14 z-10 flex w-64 flex-col border-r border-slate-200 bg-white p-3">
+      <div className="mb-4 rounded-2xl bg-slate-950 p-4 text-white"><b className="text-lg">Hanooot</b><p className="text-xs text-blue-200">Importing ERP workspace</p></div>
+      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
+        {nav.map(([href, label, badge]) => <Link key={href} href={href} className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700"><span>{label}</span><span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">{badge}</span></Link>)}
+      </nav>
+      <div className="mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-3 text-xs text-blue-900"><b>Facebook sync active</b><p>Last run 12 min ago • 18 leads imported</p></div>
+    </aside>
+    <main className="ml-[312px] min-h-screen p-5">{children}</main>
+  </div>
+)

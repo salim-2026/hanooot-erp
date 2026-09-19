@@ -1,22 +1,35 @@
-export type Stage = "enquiry" | "contacted" | "sourcing" | "priced" | "won" | "lost"
-export type RouteKey = "dashboard" | "leads" | "pipeline" | "sourcing" | "orders" | "products" | "contacts" | "settings" | "messages" | "drive" | "hr" | "legal"
-
-export const modules: { key: RouteKey; label: string; count?: string }[] = [
-  { key: "dashboard", label: "Dashboard" }, { key: "leads", label: "Leads", count: "128" }, { key: "pipeline", label: "Pipeline" }, { key: "sourcing", label: "Sourcing" }, { key: "orders", label: "Orders" }, { key: "products", label: "Products" }, { key: "contacts", label: "Contacts" }, { key: "settings", label: "Settings" }, { key: "messages", label: "Messages" }, { key: "drive", label: "Drive" }, { key: "hr", label: "HR" }, { key: "legal", label: "Legal" },
+export type RouteKey = "dashboard" | "leads" | "pipeline" | "sourcing" | "orders" | "products" | "contacts" | "settings" | "messages" | "drive" | "hr" | "legal" | "overview" | "importing"
+export const stages = ["Synced", "Contacted", "Qualified", "Won"]
+export const leads = [
+  ["Solar inverter import", "Ahmed Al‑Najjar", "Facebook", "September KSA", "$8,400", "2 call attempts"],
+  ["Kitchen appliance bundle", "شركة النور للتجارة", "Facebook", "Importing CN", "$14,200", "Open WhatsApp"],
+  ["Kids bikes wholesale", "Lina Haddad", "Website", "Organic", "$3,250", "Convert to deal"]
 ]
-
-export const stages: { key: Stage; label: string }[] = [
-  { key: "enquiry", label: "Enquiry" }, { key: "contacted", label: "Contacted" }, { key: "sourcing", label: "Src Req" }, { key: "priced", label: "Priced" }, { key: "won", label: "Won" }, { key: "lost", label: "Lost" },
-]
-
 export const deals = [
-  { id: "CN-7716", company: "Engines World", contact: "Yahya Hamadani", phone: "+964 770 742 5566", owner: "Tania", stage: "priced" as Stage, amount: 150, tags: ["Importing Service", "Mustafa W"], arabicNote: "يرجى تأكيد السعر قبل الشحن", products: ["LED headlight kits H4/H7 mix", "Engine gasket set"], orderId: "HO-1042" },
-  { id: "CN-7760", company: "Farqad", contact: "Importing Service", phone: "+964 781 220 5040", owner: "Mustafa", stage: "enquiry" as Stage, amount: 0, tags: ["Importing Service"], arabicNote: "عميل جديد من فيسبوك", products: ["Stainless steel kitchen sink 60x45cm"], orderId: undefined },
-  { id: "CN-7810", company: "Mohammed Ghazi", contact: "Kitchen supply", phone: "+964 770 168 4080", owner: "Noor", stage: "sourcing" as Stage, amount: 320, tags: ["Facebook", "MOQ 300"], arabicNote: "سعر مستهدف أقل من 9$", products: ["Stainless steel kitchen sink 60x45cm"], orderId: undefined },
+  ["Quote", "Commercial blender lot", "بيت القهوة", "CN-24063", "$11,900"],
+  ["Negotiation", "LED panels 600 units", "Noura Trading", "CN-24088", "$19,600"],
+  ["Won / create order", "Ceramic dinnerware", "Al Noor Hotels", "CN-24072", "$27,400"],
+  ["Lost", "Fitness bands", "FitLine", "CN-23998", "$4,300"]
 ]
+export const products = [
+  ["Solar inverter 5KW", "¥1,380", "$192.74", "CN-24088", "Video slot"],
+  ["Ceramic dinnerware set", "¥68", "$9.50", "CN-24072", "Image slot"],
+  ["304 steel thermos", "¥34", "$4.75", "CN-24091", "Removable"],
+  ["Commercial blender", "¥410", "$57.26", "CN-24063", "Supplier media"]
+]
+export const orders = [
+  ["Invoice", "Ceramic dinnerware", "Al Noor Hotels", "ZB-1044", "2d", "Sara"],
+  ["Factory production", "LED panels", "Noura Trading", "CN-24088", "6d", "Mr. Wang"],
+  ["Shipping", "Kitchen bundle", "شركة النور للتجارة", "HNT928118", "ETA 11d", "Rami"],
+  ["Delivered", "Commercial blender", "بيت القهوة", "Closed", "Done", "Rami"]
+]
+export const tableRows = {
+  contacts: [["Ahmed Al‑Najjar", "Customer", "Riyadh", "Maya", "$8,400"], ["شركة النور للتجارة", "Customer", "Jeddah", "Rami", "$14,200"], ["Guangzhou Everbright", "Supplier", "Guangzhou", "Chen", "¥82k"]],
+  drive: [["CN-24072 quote.pdf", "Deal • Ceramic dinnerware", "Sara", "428 KB"], ["Supplier video — inverter.mp4", "Sourcing • CN-24088", "Chen", "21 MB"]],
+  hr: [["Maya Khaled", "CRM Lead", "$4,200", "$210", "$3,990"], ["سارة منصور", "Account manager", "$3,900", "$195", "$3,705"]],
+  legal: [["Al Noor Hotels", "Import contract review", "CRM", "$2,400", "Draft"], ["شركة النور للتجارة", "Client-services retainer", "Referral", "$4,800", "Active matter"]]
+}
+export const settings = ["Organisation and departments", "Staff/people directory", "Currency & tax: RMB → USD 7.16, tax 5%", "Campaign/ad form settings", "Pipeline/order stages", "Automation rules", "Facebook sync", "Zoho Books sync", "WhatsApp templates", "User roles"]
+export const messages = ["@Maya assigned CN-24088 to Chen for updated supplier video.", "System imported 18 Facebook leads from September KSA.", "WhatsApp template sent to العميل: الشحنة قيد التجهيز."]
 
-export const activity = ["Proposal sent — Jul 29", "@yousif aljbara requested supplier price", "WhatsApp follow-up queued", "Zoho Books amount synced"]
-export const orders = [{ id: "HO-1042", dealId: "CN-7716", customer: "Engines World", status: "Revealed from Mark Won", total: "$150", tax: "IQD VAT ready" }]
-export const files = ["Supplier quote - Guangzhou.pdf", "Product photos / CN-7810", "Legal template - importing service.docx", "HR onboarding checklist.xlsx"]
-export const people = ["مصطفى النداوي", "Tania Sales", "Yousif Aljbara", "Noor Operations"]
-export const connectors = ["Facebook lead sync", "Zoho Books invoices", "WhatsApp messaging", "Supabase Storage uploads", "Currency & tax rules"]
+export const arabicSupport = "Arabic names/content render inside English LTR records"

@@ -1,8 +1,4 @@
-import { createClient } from "@supabase/supabase-js"
-
-export const createSupabaseBrowserClient = () => {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!url || !anon) return null
-  return createClient(url, anon)
+export const supabaseStorageBoundary = {
+  status: "mock",
+  message: "Supabase Storage upload/list/link flows are represented by the Drive UI until project credentials are connected."
 }
