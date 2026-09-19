@@ -1,4 +1,5 @@
-import { ErpPage } from "@/components/erp/ErpPage"
+import { PageChrome } from "@/components/erp/PageChrome"
+import { PipelinePage } from "@/sections/pipeline/PipelinePage"
 
-const Page = () => <ErpPage route="pipeline" />
+const Page = () => <PageChrome><PipelinePage /></PageChrome>
 export default Page

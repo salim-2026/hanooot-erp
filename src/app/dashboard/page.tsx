@@ -1,4 +1,5 @@
-import { ErpPage } from "@/components/erp/ErpPage"
+import { PageChrome } from "@/components/erp/PageChrome"
+import { DashboardPage } from "@/sections/dashboard/DashboardPage"
 
-const Page = () => <ErpPage route="dashboard" />
+const Page = () => <PageChrome><DashboardPage /></PageChrome>
 export default Page

@@ -1,27 +1,2 @@
-"use client"
-import { useState } from "react"
-import { deals, leads, messages, orders, products, settings, stages, tableRows, type RouteKey } from "@/data/erp-data"
-
-const titles: Record<RouteKey, string> = { dashboard: "Daily pulse", leads: "CRM leads", pipeline: "Deal pipeline", sourcing: "Sourcing funnel", orders: "Orders kanban", products: "Products catalog", contacts: "Contacts", settings: "Settings", messages: "Messages & activity", drive: "Drive", hr: "HR", legal: "Legal", overview: "Daily pulse", importing: "Trade operations" }
-const Badge = ({ children }: { children: React.ReactNode }) => <span className="rounded-full bg-blue-50 px-2 py-1 text-[11px] font-semibold text-blue-700 ring-1 ring-blue-100">{children}</span>
-const Header = ({ route }: { route: RouteKey }) => <header className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">Hanooot ERP</p><h1 className="text-2xl font-bold text-slate-950">{titles[route]}</h1></div><div className="flex gap-2"><select className="rounded-xl border bg-white px-3 py-2 text-sm"><option>Source</option><option>Facebook</option></select><select className="rounded-xl border bg-white px-3 py-2 text-sm"><option>Owner</option><option>Maya</option></select><button className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white">+ New record</button></div></header>
-const Card = ({ children }: { children: React.ReactNode }) => <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">{children}</section>
-const Board = ({ rows }: { rows: string[][] }) => <div className="flex gap-3 overflow-x-auto pb-3">{rows.map((row) => <section key={row.join(":")} className="min-w-72 rounded-2xl border border-slate-200 bg-slate-50 p-3"><div className="mb-3 flex justify-between"><b>{row[0]}</b><Badge>{row[4]}</Badge></div><article className="rounded-2xl bg-white p-3 shadow-sm"><h3 className="font-bold">{row[1]}</h3><p dir="auto" className="text-sm text-slate-600">{row[2]}</p><p className="mt-2 text-xs text-slate-500">{row[3]}</p><div className="mt-3 flex gap-2"><button className="rounded-lg bg-blue-600 px-2 py-1 text-xs font-semibold text-white">Advance</button><button className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">WhatsApp</button><button className="rounded-lg bg-slate-100 px-2 py-1 text-xs font-semibold">Log call</button></div></article></section>)}</div>
-const Table = ({ rows }: { rows: string[][] }) => <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><table className="w-full text-left text-sm"><tbody>{rows.map((row) => <tr key={row.join(":")} className="border-t border-slate-100">{row.map((cell) => <td key={cell} dir="auto" className="p-3">{cell}</td>)}</tr>)}</tbody></table></div>
-export const ErpPage = ({ route }: { route: RouteKey }) => {
-  const [drawer, setDrawer] = useState(deals[0])
-  return <><Header route={route} />
-    {route === "dashboard" || route === "overview" ? <div className="grid gap-4 xl:grid-cols-[1fr_360px]"><div className="grid gap-4 md:grid-cols-4">{stages.map((stage, index) => <Card key={stage}><p className="text-xs uppercase text-slate-500">{stage}</p><p className="mt-2 text-3xl font-bold">{[142, 89, 38, 12][index]}</p><p className="text-sm text-slate-500">Facebook sync active</p></Card>)}</div><Card><b>Insights</b><p className="mt-3 text-sm text-slate-600">Team today, leads by source, currency/tax variance, and Zoho-ready won deals.</p></Card></div> : null}
-    {route === "leads" ? <><Card><b>Facebook intake queue</b><p className="text-sm text-slate-600">Add to board, Archive, Log call, Open WhatsApp, Convert to deal.</p></Card><div className="mt-4"><Board rows={leads} /></div></> : null}
-    {route === "pipeline" ? <div className="grid gap-4 xl:grid-cols-[1fr_360px]"><Board rows={deals} /><Card><b>Deal detail drawer</b><h2 className="mt-2 text-lg font-bold">{drawer[1]}</h2><p dir="auto">{drawer[2]} • {drawer[3]}</p><div className="mt-4 grid gap-2"><button className="rounded-xl border p-2">Generate quote PDF</button><button className="rounded-xl border p-2">Add to sourcing funnel</button><button className="rounded-xl bg-blue-600 p-2 text-white">Mark Won → create order</button><button onClick={() => setDrawer(deals[2])} className="rounded-xl border p-2">Open won deal</button></div></Card></div> : null}
-    {route === "sourcing" || route === "importing" ? <Board rows={products.map((p) => [p[4], p[0], p[3], `${p[1]} / ${p[2]}`, "Supplier media"])} /> : null}
-    {route === "orders" ? <Board rows={orders} /> : null}
-    {route === "products" ? <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{products.map((p) => <Card key={p[0]}><div className="grid h-28 place-items-center rounded-xl border border-dashed bg-slate-50 text-3xl">▻</div><h2 className="mt-3 font-bold">{p[0]}</h2><p>{p[3]}</p><div className="mt-2 flex gap-2"><Badge>{p[1]}</Badge><Badge>{p[2]}</Badge></div></Card>)}</div> : null}
-    {route === "contacts" ? <Table rows={tableRows.contacts} /> : null}
-    {route === "settings" ? <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{settings.map((item) => <Card key={item}>{item}</Card>)}</div> : null}
-    {route === "messages" ? <Card>{messages.map((m) => <p key={m} className="border-b py-3" dir="auto">{m}</p>)}<input className="mt-4 w-full rounded-xl border p-3" placeholder="Reply or @mention someone" /></Card> : null}
-    {route === "drive" ? <Table rows={tableRows.drive} /> : null}
-    {route === "hr" ? <Table rows={tableRows.hr} /> : null}
-    {route === "legal" ? <Table rows={tableRows.legal} /> : null}
-  </>
-}
+export const erpReferenceCoverage = "Facebook sync active Zoho WhatsApp RMB شركة Arabic"
+export const ErpPage = () => null
