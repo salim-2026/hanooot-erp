@@ -1,6 +1,6 @@
 export type Stage = "Synced" | "Contacted" | "Qualified" | "Won" | "Ghosted"
-export type DealStage = "Quote sent" | "Negotiation" | "Payment" | "Won" | "Lost"
-export type OrderStage = "Sourcing" | "Purchased" | "Shipping" | "Customs" | "Delivered"
+export type DealStage = "Enquiry" | "Contacted" | "Sourcing requested" | "Sourcing received" | "Enquiry priced" | "Won" | "Lost"
+export type OrderStage = "Payment" | "Production" | "Shipped" | "Reached Iraq" | "Delivered"
 
 export type Lead = { id: string; name: string; phone: string; source: string; campaign: string; owner: string; stage: Stage; value: number; attempts: number; note: string; archived?: boolean }
 export type Deal = { id: string; customer: string; name: string; cn: string; owner: string; value: number; stage: DealStage; quoteItems: string[]; activity: string[] }
@@ -9,8 +9,8 @@ export type Order = { id: string; cn: string; dn: string; invoice: string; custo
 export type Product = { id: string; title: string; cn: string; desc: string; media: string; priceRmb: number; moq: string; removable?: boolean }
 
 export const leadStages: Stage[] = ["Synced", "Contacted", "Qualified", "Won", "Ghosted"]
-export const dealStages: DealStage[] = ["Quote sent", "Negotiation", "Payment", "Won", "Lost"]
-export const orderStages: OrderStage[] = ["Sourcing", "Purchased", "Shipping", "Customs", "Delivered"]
+export const dealStages: DealStage[] = ["Enquiry", "Contacted", "Sourcing requested", "Sourcing received", "Enquiry priced", "Won", "Lost"]
+export const orderStages: OrderStage[] = ["Payment", "Production", "Shipped", "Reached Iraq", "Delivered"]
 
 export const initialLeads: Lead[] = [
   { id: "lead-1", name: "Mohammed Ghazi", phone: "+966 55 120 4421", source: "Facebook", campaign: "Ramadan-B", owner: "Rasha", stage: "Synced", value: 8400, attempts: 0, note: "China sourcing — asks for WhatsApp catalogue" },
@@ -20,19 +20,19 @@ export const initialLeads: Lead[] = [
 ]
 
 export const initialDeals: Deal[] = [
-  { id: "deal-1", customer: "بيت القهوة", name: "Commercial blender lot", cn: "CN-24063", owner: "Rami", value: 11900, stage: "Quote sent", quoteItems: ["12 blenders", "Spare blades", "1-year service"], activity: ["Quote PDF generated", "WhatsApp template sent"] },
-  { id: "deal-2", customer: "Noura Trading", name: "LED panels 600 units", cn: "CN-24088", owner: "Noor", value: 19600, stage: "Negotiation", quoteItems: ["600 LED panels", "Sea freight", "Customs estimate"], activity: ["Supplier video requested", "Zoho draft invoice ready"] },
-  { id: "deal-3", customer: "Al Noor Hotels", name: "Ceramic dinnerware", cn: "CN-24072", owner: "Sara", value: 27400, stage: "Payment", quoteItems: ["4,000 plates", "Logo print", "QC inspection"], activity: ["Deposit 50% promised", "Add to sourcing funnel"] }
+  { id: "deal-1", customer: "بيت القهوة", name: "Commercial blender lot", cn: "CN-24063", owner: "Rami", value: 11900, stage: "Enquiry", quoteItems: ["12 blenders", "Spare blades", "1-year service"], activity: ["Quote PDF generated", "WhatsApp template sent"] },
+  { id: "deal-2", customer: "Noura Trading", name: "LED panels 600 units", cn: "CN-24088", owner: "Noor", value: 19600, stage: "Contacted", quoteItems: ["600 LED panels", "Sea freight", "Customs estimate"], activity: ["Supplier video requested", "Zoho draft invoice ready"] },
+  { id: "deal-3", customer: "Al Noor Hotels", name: "Ceramic dinnerware", cn: "CN-24072", owner: "Sara", value: 27400, stage: "Enquiry priced", quoteItems: ["4,000 plates", "Logo print", "QC inspection"], activity: ["Deposit 50% promised", "Add to sourcing funnel"] }
 ]
 
 export const initialSourcing: SourcingRequest[] = [
-  { id: "src-1", item: "LED panels 600 units", customer: "Noura Trading", cn: "CN-24088", owner: "Chen", qty: "600 pcs", stage: "Supplier quote", priceRmb: 1380, candidates: ["Guangzhou Everbright", "Shenzhen BrightMax"] },
-  { id: "src-2", item: "Ceramic dinnerware set", customer: "Al Noor Hotels", cn: "CN-24072", owner: "Sara", qty: "400 cartons", stage: "Priced", priceRmb: 68, candidates: ["Foshan Ceramics", "Yiwu Tableware"] }
+  { id: "src-1", item: "LED panels 600 units", customer: "Noura Trading", cn: "CN-24088", owner: "Chen", qty: "600 pcs", stage: "Sourcing requested", priceRmb: 1380, candidates: ["Guangzhou Everbright", "Shenzhen BrightMax"] },
+  { id: "src-2", item: "Ceramic dinnerware set", customer: "Al Noor Hotels", cn: "CN-24072", owner: "Sara", qty: "400 cartons", stage: "Enquiry priced", priceRmb: 68, candidates: ["Foshan Ceramics", "Yiwu Tableware"] }
 ]
 
 export const initialOrders: Order[] = [
-  { id: "ord-1", cn: "CN-24072", dn: "DN-341", invoice: "ZB-1044", customer: "Al Noor Hotels", owner: "Sara", tracking: "HNT928118", stage: "Sourcing", duration: "2d", sender: "Ms. Li" },
-  { id: "ord-2", cn: "CN-24088", dn: "DN-340", invoice: "ZB-1049", customer: "Noura Trading", owner: "Noor", tracking: "supplier quote due", stage: "Shipping", duration: "ETA 11d", sender: "Mr. Wang" },
+  { id: "ord-1", cn: "CN-24072", dn: "DN-341", invoice: "ZB-1044", customer: "Al Noor Hotels", owner: "Sara", tracking: "HNT928118", stage: "Payment", duration: "2d", sender: "Ms. Li" },
+  { id: "ord-2", cn: "CN-24088", dn: "DN-340", invoice: "ZB-1049", customer: "Noura Trading", owner: "Noor", tracking: "supplier quote due", stage: "Shipped", duration: "ETA 11d", sender: "Mr. Wang" },
   { id: "ord-3", cn: "CN-24063", dn: "DN-338", invoice: "ZB-1028", customer: "بيت القهوة", owner: "Rami", tracking: "Closed", stage: "Delivered", duration: "Done", sender: "Rami" }
 ]
 

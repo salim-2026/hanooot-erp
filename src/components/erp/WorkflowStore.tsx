@@ -32,7 +32,7 @@ export const WorkflowProvider = ({ children }: { children: React.ReactNode }) =>
     convertLead: (id) => {
       const lead = leads.find((item) => item.id === id)
       if (!lead) return
-      const deal: Deal = { id: `deal-${Date.now()}`, customer: lead.name, name: `${lead.campaign} import opportunity`, cn: `CN-${Math.floor(24090 + Math.random() * 80)}`, owner: lead.owner, value: lead.value, stage: "Quote sent", quoteItems: ["Customer requirements", "Supplier quote", "Shipping estimate"], activity: ["Converted from lead", `Original source: ${lead.source}`] }
+      const deal: Deal = { id: `deal-${Date.now()}`, customer: lead.name, name: `${lead.campaign} import opportunity`, cn: `CN-${Math.floor(24090 + Math.random() * 80)}`, owner: lead.owner, value: lead.value, stage: "Enquiry", quoteItems: ["Customer requirements", "Supplier quote", "Shipping estimate"], activity: ["Converted from lead", `Original source: ${lead.source}`] }
       setDeals((items) => [deal, ...items]); setLeads((items) => items.map((item) => item.id === id ? { ...item, stage: "Won" } : item)); note(`Converted ${lead.name} to ${currency(lead.value)} deal`)
     },
     advanceDeal: (id) => setDeals((items) => items.map((deal) => { const idx = dealStages.indexOf(deal.stage); const stage = dealStages[Math.min(idx + 1, dealStages.length - 2)] as DealStage; if (deal.id === id) note(`Deal ${deal.cn} moved to ${stage}`); return deal.id === id ? { ...deal, stage, activity: [`Moved to ${stage}`, ...deal.activity] } : deal })),
@@ -40,18 +40,18 @@ export const WorkflowProvider = ({ children }: { children: React.ReactNode }) =>
       const deal = deals.find((item) => item.id === id)
       if (!deal) return
       setDeals((items) => items.map((item) => item.id === id ? { ...item, stage: "Won", activity: ["Marked won · order created", ...item.activity] } : item))
-      const order: Order = { id: `ord-${Date.now()}`, cn: deal.cn, dn: `DN-${Math.floor(350 + Math.random() * 80)}`, invoice: `ZB-${Math.floor(1050 + Math.random() * 80)}`, customer: deal.customer, owner: deal.owner, tracking: "created from won deal", stage: "Sourcing", duration: "0d", sender: deal.owner }
+      const order: Order = { id: `ord-${Date.now()}`, cn: deal.cn, dn: `DN-${Math.floor(350 + Math.random() * 80)}`, invoice: `ZB-${Math.floor(1050 + Math.random() * 80)}`, customer: deal.customer, owner: deal.owner, tracking: "created from won deal", stage: "Payment", duration: "0d", sender: deal.owner }
       setOrders((items) => [order, ...items]); note(`Won deal ${deal.cn} created order ${order.dn}`)
     },
     addDealToSourcing: (id) => {
       const deal = deals.find((item) => item.id === id)
       if (!deal) return
-      const request: SourcingRequest = { id: `src-${Date.now()}`, item: deal.name, customer: deal.customer, cn: deal.cn, owner: deal.owner, qty: "Needs estimate", stage: "New request", priceRmb: Math.round(deal.value / exchangeRate / 10), candidates: ["Supplier shortlist pending"] }
+      const request: SourcingRequest = { id: `src-${Date.now()}`, item: deal.name, customer: deal.customer, cn: deal.cn, owner: deal.owner, qty: "Needs estimate", stage: "Sourcing requested", priceRmb: Math.round(deal.value / exchangeRate / 10), candidates: ["Supplier shortlist pending"] }
       setSourcing((items) => [request, ...items]); note(`Added ${deal.cn} to sourcing funnel`)
     },
     advanceOrder: (id) => setOrders((items) => items.map((order) => { const idx = orderStages.indexOf(order.stage); const stage = orderStages[Math.min(idx + 1, orderStages.length - 1)] as OrderStage; if (order.id === id) note(`Order ${order.cn} moved to ${stage} · WhatsApp update ready`); return order.id === id ? { ...order, stage } : order })),
     addSourcing: (request) => { setSourcing((items) => [request, ...items]); note(`New sourcing request ${request.cn} created`) },
-    advanceSourcing: (id) => setSourcing((items) => items.map((request) => request.id === id ? { ...request, stage: request.stage === "New request" ? "Supplier quote" : request.stage === "Supplier quote" ? "Priced" : "Ready for product" } : request)),
+    advanceSourcing: (id) => setSourcing((items) => items.map((request) => request.id === id ? { ...request, stage: request.stage === "Sourcing requested" ? "In progress" : request.stage === "In progress" ? "Enquiry priced" : "Enquiry priced" } : request)),
     addProduct: (product) => { setProducts((items) => [product, ...items]); note(`Product ${product.title} added to catalogue`) },
     removeProduct: (id) => { setProducts((items) => items.filter((product) => product.id !== id)); note("Product card removed from catalogue") },
     updateSettings: (rate, tax) => { setExchangeRate(rate); setTaxRate(tax); note(`Currency/tax settings updated: RMB→USD ${rate}, tax ${tax}%`) }
