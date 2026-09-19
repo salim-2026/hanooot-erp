@@ -1,155 +1,35 @@
-import Link from "next/link"
-
-type Metric = {
-  label: string
-  value: string
-  detail: string
-  accent?: string
+const periodTabs = ["Today", "This Week", "This month", "All time", "Custom"]
+const moduleTabs = [["Overview", ""], ["Leads", "4"], ["Pipeline", "1"], ["Sourcing", "1"], ["Orders", "1"]]
+const funnel = [["50", "Leads in", "in the last week", "h-[86px] bg-[#bed0f5]"], ["32", "Contacted", "64% of previous", "h-[56px] bg-[#91abea]"], ["11", "Qualified", "34% of previous", "h-[20px] bg-[#5d82e8]"], ["5", "Deals won", "45% of previous", "h-[8px] bg-[#3157dd]"], ["4", "Delivered", "80% of previous", "h-[8px] bg-[#1738cf]"]]
+const team = {
+  sales: [["Tania", "0", "0", "0"], ["Mustafa Naseer", "5", "1", "0"], ["Ali", "5", "1", "2"]],
+  sourcing: [["Yousif Aljabara", "1", "1", "2.6d"], ["Mohammed Alwahid", "1", "0", "2.2d"], ["Abdullah Thamer", "0", "0", "1.8d"]],
+  ops: [["Mustafa Waiz", "2", "0"], ["Abdullah Abbas", "1", "0"], ["AbdulAzeez Mohammed", "0", "0"]],
 }
 
-type Department = {
-  name: string
-  subtitle: string
-  icon: string
-  tone: string
-  href: string
-  metrics: Metric[]
-}
+const Chip = ({ label, count, active = false }: { label: string; count?: string; active?: boolean }) => <button className={`h-9 rounded-2xl px-4 text-[12px] font-bold shadow-sm ${active ? "bg-[#204bd8] text-white" : "border border-[#dcd9d0] bg-white text-[#2c312a]"}`}>{label}{count ? <span className="ml-1 text-[11px]">{count}</span> : null}</button>
 
-const topMetrics: Metric[] = [
-  { label: "Revenue MTD", value: "$118,600", detail: "+11% vs July", accent: "text-emerald-600" },
-  { label: "Open work items", value: "17", detail: "11 import · 6 accounting" },
-  { label: "Shipments in transit", value: "6", detail: "1 delayed at Aqaba", accent: "text-amber-700" },
-  { label: "Headcount", value: "13", detail: "7 departments" },
-]
-
-const departments: Department[] = [
-  {
-    name: "Importing Service",
-    subtitle: "Sourcing · quotes · orders",
-    icon: "▣",
-    tone: "bg-amber-50 text-amber-700 ring-amber-100",
-    href: "/sourcing",
-    metrics: [
-      { label: "Live deals", value: "5", detail: "" },
-      { label: "Orders in transit", value: "6", detail: "" },
-      { label: "Order value", value: "$86,500", detail: "" },
-    ],
-  },
-  {
-    name: "Legal Service",
-    subtitle: "Client services CRM · retainers",
-    icon: "⚖",
-    tone: "bg-blue-50 text-blue-700 ring-blue-100",
-    href: "/legal",
-    metrics: [
-      { label: "Open enquiries", value: "6", detail: "" },
-      { label: "Weighted pipeline", value: "$20,800", detail: "" },
-      { label: "Active retainers", value: "4", detail: "" },
-    ],
-  },
-  {
-    name: "HR",
-    subtitle: "Directory · leave · payroll",
-    icon: "♧",
-    tone: "bg-emerald-50 text-emerald-700 ring-emerald-100",
-    href: "/hr",
-    metrics: [
-      { label: "Leave requests", value: "2", detail: "" },
-      { label: "Net payroll (Aug)", value: "$18,045", detail: "" },
-      { label: "Docs expiring", value: "2", detail: "" },
-    ],
-  },
-]
-
-const activity = [
-  ["bg-amber-500", "Order AQB-4471 cleared customs", "Importing Service · 14 min ago"],
-  ["bg-blue-500", "Mansour Group retainer signed", "Legal Service · 2h ago"],
-  ["bg-emerald-500", "Leave request from A. Thamer awaiting approval", "HR · 5h ago"],
-  ["bg-blue-600", "New enquiry: Salameh & Sons — company formation", "Legal Service · Yesterday"],
-]
-
-const branches = [
-  ["Amman — Head office", "Legal · HR · Importing", "14 staff"],
-  ["Aqaba — Port office", "Importing", "5 staff"],
-  ["Dubai — Trade desk", "Importing · Legal", "3 staff"],
-]
-
-const MetricCard = ({ metric }: { metric: Metric }) => (
-  <section className="rounded-xl border border-[#dedbd2] bg-white p-4 shadow-[0_1px_2px_rgba(20,24,18,0.08)]">
-    <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#777a70]">{metric.label}</p>
-    <p className="mt-3 text-2xl font-black tracking-tight text-[#11140f]">{metric.value}</p>
-    <p className={`mt-1 text-[11px] font-medium ${metric.accent ?? "text-[#6b6f64]"}`}>{metric.detail}</p>
-  </section>
-)
-
-const DepartmentCard = ({ department }: { department: Department }) => (
-  <section className="overflow-hidden rounded-xl border border-[#dedbd2] bg-white shadow-[0_1px_2px_rgba(20,24,18,0.08)]">
-    <div className="flex items-center justify-between border-b border-[#e7e4dc] px-4 py-3">
-      <div className="flex items-center gap-3">
-        <span className={`grid size-9 place-items-center rounded-xl text-sm ring-1 ${department.tone}`}>{department.icon}</span>
-        <div>
-          <h2 className="text-sm font-bold text-[#171712]">{department.name}</h2>
-          <p className="text-[11px] text-[#777a70]">{department.subtitle}</p>
-        </div>
-      </div>
-      <Link href={department.href} className="text-[11px] font-bold text-blue-700">Open →</Link>
-    </div>
-    <div className="grid grid-cols-3 divide-x divide-[#e7e4dc]">
-      {department.metrics.map((metric) => (
-        <div key={metric.label} className="px-4 py-3">
-          <p className="text-xl font-black text-[#171712]">{metric.value}</p>
-          <p className="mt-1 text-[11px] text-[#777a70]">{metric.label}</p>
-        </div>
-      ))}
-    </div>
+const TeamCard = ({ title, subtitle, headers, rows }: { title: string; subtitle: string; headers: string[]; rows: string[][] }) => (
+  <section className="rounded-xl border border-[#dedbd2] bg-white p-4 shadow-sm">
+    <div className="mb-4 flex items-baseline gap-2"><h3 className="text-[13px] font-bold">{title}</h3><p className="text-[11px] text-[#777a70]">{subtitle}</p></div>
+    <table className="w-full text-left text-[11px]"><thead><tr className="text-[9px] uppercase tracking-[0.12em] text-[#777a70]"><th className="pb-2">Person</th>{headers.map((h) => <th key={h} className="pb-2 text-right">{h}</th>)}</tr></thead><tbody>{rows.map((row) => <tr key={row[0]}><td className="py-1.5 font-semibold">{row[0]}</td>{row.slice(1).map((cell, index) => <td key={`${row[0]}-${index}`} className={`py-1.5 text-right font-semibold ${index === row.length - 2 ? "text-emerald-600" : ""}`}>{cell}</td>)}</tr>)}</tbody></table>
   </section>
 )
 
 export const DashboardPage = () => (
-  <div className="max-w-[1080px]">
-    <header className="mb-4 flex items-center justify-between">
-      <div className="flex items-baseline gap-3">
-        <h1 className="text-[15px] font-bold text-[#171712]">Overview</h1>
-        <p className="text-xs text-[#777a70]">27 August 2026</p>
-      </div>
-      <p className="text-xs text-[#55594f]">Mustafa Waiz · Managing Director</p>
+  <div className="max-w-[1240px]">
+    <header className="mb-4 flex items-start justify-between gap-4">
+      <div><h1 className="text-xl font-extrabold tracking-tight">Good morning, Mustafa</h1><div className="mt-4 flex gap-2">{moduleTabs.map(([label, count], index) => <Chip key={label} label={label} count={count} active={index === 0} />)}</div></div>
+      <div className="flex rounded-2xl bg-[#ebebe4] p-1">{periodTabs.map((tab, index) => <button key={tab} className={`h-7 rounded-xl px-3 text-[11px] font-semibold ${index === 1 ? "bg-white text-[#11140f] shadow-sm" : "text-[#777a70]"}`}>{tab}</button>)}</div>
     </header>
 
-    <div className="grid gap-3 lg:grid-cols-4">
-      {topMetrics.map((metric) => <MetricCard key={metric.label} metric={metric} />)}
-    </div>
+    <section className="grid gap-3 lg:grid-cols-[360px_1fr]">
+      <div className="rounded-xl border border-[#dedbd2] bg-white p-4 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#777a70]">Won this week</p><p className="mt-3 text-4xl font-black tracking-tight">$185</p><p className="mt-1 text-[12px] text-[#777a70]">2 deals closed</p></div>
+      <div className="rounded-xl border border-[#dedbd2] bg-white p-4 shadow-sm"><div className="mb-3 flex items-start justify-between"><div><h2 className="text-[13px] font-bold">Deals won per week</h2><p className="text-[11px] text-[#777a70]">last 8 weeks</p></div><p className="text-[12px] font-bold text-emerald-600">+25% vs last week</p></div><div className="grid grid-cols-8 items-end gap-2">{[2,3,2,3,3,4,4,5].map((value, index) => <div key={index} className="text-center"><p className="mb-2 text-[11px] font-semibold">{value}</p><div className={`rounded-t-md ${index === 7 ? "bg-[#2546d8]" : "bg-[#b7c9f3]"}`} style={{ height: `${22 + value * 8}px` }} /><p className="mt-2 text-[10px] text-[#777a70]">{index === 7 ? "Now" : `W${index + 1}`}</p></div>)}</div></div>
+    </section>
 
-    <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_292px]">
-      <div className="space-y-3">
-        {departments.map((department) => <DepartmentCard key={department.name} department={department} />)}
-      </div>
-      <aside className="space-y-3">
-        <section className="overflow-hidden rounded-xl border border-[#dedbd2] bg-white shadow-[0_1px_2px_rgba(20,24,18,0.08)]">
-          <h2 className="border-b border-[#e7e4dc] px-4 py-3 text-xs font-bold text-[#171712]">Recent activity</h2>
-          {activity.map(([dot, title, detail]) => (
-            <div key={title} className="flex gap-3 border-b border-[#eeeae3] px-4 py-3 last:border-b-0">
-              <span className={`mt-1 size-2 rounded-full ${dot}`} />
-              <div>
-                <p className="text-xs font-semibold text-[#2a2d27]">{title}</p>
-                <p className="mt-1 text-[11px] text-[#777a70]">{detail}</p>
-              </div>
-            </div>
-          ))}
-        </section>
-        <section className="overflow-hidden rounded-xl border border-[#dedbd2] bg-white shadow-[0_1px_2px_rgba(20,24,18,0.08)]">
-          <h2 className="border-b border-[#e7e4dc] px-4 py-3 text-xs font-bold text-[#171712]">Branches</h2>
-          {branches.map(([name, scope, staff]) => (
-            <div key={name} className="flex items-center justify-between border-b border-[#eeeae3] px-4 py-3 last:border-b-0">
-              <div>
-                <p className="text-xs font-bold text-[#2a2d27]">{name}</p>
-                <p className="mt-1 text-[11px] text-[#777a70]">{scope}</p>
-              </div>
-              <span className="text-[11px] text-[#777a70]">{staff}</span>
-            </div>
-          ))}
-        </section>
-      </aside>
-    </div>
+    <section className="mt-3 rounded-xl border border-[#dedbd2] bg-white p-4 shadow-sm"><div className="mb-8 flex items-baseline gap-2"><h2 className="text-[13px] font-bold">Funnel</h2><p className="text-[11px] text-[#777a70]">lead in → goods delivered</p></div><div className="grid grid-cols-5 items-end gap-2">{funnel.map(([value, label, detail, bar]) => <div key={label} className="text-center"><p className="mb-3 text-lg font-black">{value}</p><div className={`${bar} rounded-md`} /><p className="mt-3 text-[11px] font-bold">{label}</p><p className="text-[10px] text-[#777a70]">{detail}</p></div>)}</div></section>
+
+    <section className="mt-4"><h2 className="mb-3 text-[13px] font-bold">Who is keeping up</h2><div className="grid gap-3 lg:grid-cols-3"><TeamCard title="Sales" subtitle="leads → qualified" headers={["Calls", "Qual.", "Stale"]} rows={team.sales} /><TeamCard title="Sourcing" subtitle="requests → priced" headers={["Open", "Priced", "Avg"]} rows={team.sourcing} /><TeamCard title="Ops" subtitle="orders in transit" headers={["Orders", "Late"]} rows={team.ops} /></div></section>
   </div>
 )
