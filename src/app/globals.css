@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+:root { --bg:#f3f0e9; --ink:#171714; --muted:#726f67; --line:#ded9ce; --blue:#2455dc; --rail:#191917; --card:#fffdf8; }
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif} a{text-decoration:none;color:inherit} button,input,textarea,select{font:inherit} .rtl-content{direction:rtl;text-align:start}
