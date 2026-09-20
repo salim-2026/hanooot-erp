@@ -100,11 +100,7 @@ export const AppShell = ({ children }: { children: React.ReactNode }) => {
       </aside>
 
       <div className="min-h-screen pl-[196px]">
-        <header className="sticky top-0 z-10 flex h-[38px] items-center justify-between border-b border-[#e4e0d6] bg-[#fbfaf7]/95 px-4 backdrop-blur">
-          <div className="flex items-center gap-3 text-xs text-[#2d3129]"><span>↻</span><span>⌘</span><span className="font-semibold">Hanooot-standalone</span><span className="text-[#8d877c]">13 pages</span></div>
-          <div className="flex items-center gap-4 text-[11px] text-[#78736a]"><span>100%</span><span className="rounded-full border border-[#e4e0d6] bg-white px-3 py-1">⌁</span><span>Comment</span><span>Edit</span><span>Present⌄</span><span className="rounded-full bg-black px-3 py-1 text-white">↗ Share</span><span className="grid size-5 place-items-center rounded-full bg-[#efede6]">B</span></div>
-        </header>
-        <main className="min-h-[calc(100vh-38px)] px-5 py-5">{children}</main>
+        <main className="min-h-screen px-5 py-5">{children}</main>
       </div>
     </div>
   )
