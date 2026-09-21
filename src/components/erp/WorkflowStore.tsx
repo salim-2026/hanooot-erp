@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useMemo, useState } from "react"
-import { dealStages, initialDeals, initialLeads, initialOrders, initialProducts, initialSourcing, orderStages, settingsSeed, type Deal, type DealStage, type Lead, type Order, type OrderStage, type Product, type SourcingRequest } from "@/data/erp-data"
+import { initialDeals, initialLeads, initialOrders, initialProducts, initialSourcing, orderStages, settingsSeed, type Deal, type DealStage, type Lead, type Order, type OrderStage, type Product, type SourcingRequest } from "@/data/erp-data"
 
 type WorkflowState = {
   leads: Lead[]; deals: Deal[]; sourcing: SourcingRequest[]; orders: Order[]; products: Product[]; exchangeRate: number; taxRate: number; events: string[]
@@ -32,15 +32,15 @@ export const WorkflowProvider = ({ children }: { children: React.ReactNode }) =>
     convertLead: (id) => {
       const lead = leads.find((item) => item.id === id)
       if (!lead) return
-      const deal: Deal = { id: `deal-${Date.now()}`, customer: lead.name, name: `${lead.campaign} import opportunity`, cn: `CN-${Math.floor(24090 + Math.random() * 80)}`, owner: lead.owner, value: lead.value, stage: "Enquiry", quoteItems: ["Customer requirements", "Supplier quote", "Shipping estimate"], activity: ["Converted from lead", `Original source: ${lead.source}`] }
+      const deal: Deal = { id: `deal-${Date.now()}`, customer: lead.name, name: `${lead.campaign} import opportunity`, cn: `CN-${Math.floor(24090 + Math.random() * 80)}`, owner: lead.owner, value: lead.value, stage: "Qualification", quoteItems: ["Customer requirements", "Supplier quote", "Shipping estimate"], activity: ["Converted from lead", `Original source: ${lead.source}`], products: ["Customer requirement list"], closeDate: "Next week", serviceTag: "Importing Service", syncNote: "Converted from Facebook/website lead" }
       setDeals((items) => [deal, ...items]); setLeads((items) => items.map((item) => item.id === id ? { ...item, stage: "Won" } : item)); note(`Converted ${lead.name} to ${currency(lead.value)} deal`)
     },
-    advanceDeal: (id) => setDeals((items) => items.map((deal) => { const idx = dealStages.indexOf(deal.stage); const stage = dealStages[Math.min(idx + 1, dealStages.length - 2)] as DealStage; if (deal.id === id) note(`Deal ${deal.cn} moved to ${stage}`); return deal.id === id ? { ...deal, stage, activity: [`Moved to ${stage}`, ...deal.activity] } : deal })),
+    advanceDeal: (id) => setDeals((items) => items.map((deal) => { const nextStage: Record<DealStage, DealStage> = { "Qualification": "Negotiation / Review", "Negotiation / Review": "Proposal / Price Quote", "Proposal / Price Quote": "Closed Won", "Closed Won": "Closed Won", "Closed Lost": "Closed Lost", "Ghosted / Pending": "Negotiation / Review" }; const stage = nextStage[deal.stage]; if (deal.id === id) note(`Deal ${deal.cn} moved to ${stage}`); return deal.id === id ? { ...deal, stage, activity: [`Moved to ${stage}`, ...deal.activity] } : deal })),
     markDealWon: (id) => {
       const deal = deals.find((item) => item.id === id)
       if (!deal) return
-      setDeals((items) => items.map((item) => item.id === id ? { ...item, stage: "Won", activity: ["Marked won · order created", ...item.activity] } : item))
-      const order: Order = { id: `ord-${Date.now()}`, cn: deal.cn, dn: `DN-${Math.floor(350 + Math.random() * 80)}`, invoice: `ZB-${Math.floor(1050 + Math.random() * 80)}`, customer: deal.customer, owner: deal.owner, tracking: "created from won deal", stage: "Payment", duration: "0d", sender: deal.owner }
+      setDeals((items) => items.map((item) => item.id === id ? { ...item, stage: "Closed Won", activity: ["Marked won · order created", ...item.activity] } : item))
+      const order: Order = { id: `ord-${Date.now()}`, cn: deal.cn, dn: `DN-${Math.floor(350 + Math.random() * 80)}`, invoice: `ZB-${Math.floor(1050 + Math.random() * 80)}`, customer: deal.customer, owner: deal.owner, tracking: "created from won deal", stage: "Confirmed", duration: "0d", sender: deal.owner, assignee: deal.owner.slice(0, 2).toUpperCase(), channel: "WhatsApp draft" }
       setOrders((items) => [order, ...items]); note(`Won deal ${deal.cn} created order ${order.dn}`)
     },
     addDealToSourcing: (id) => {

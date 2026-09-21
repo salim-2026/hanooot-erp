@@ -1,5 +1,5 @@
-import { PageChrome } from "@/components/erp/PageChrome"
-import { DashboardPage } from "@/sections/dashboard/DashboardPage"
+import { redirect } from "next/navigation"
 
-const Page = () => <PageChrome><DashboardPage /></PageChrome>
+const Page = () => redirect("/importing/dashboard")
+
 export default Page
