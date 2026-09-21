@@ -1,6 +1,6 @@
 # Hanooot ERP
 
-Production-oriented Next.js/TypeScript/Tailwind/Redux foundation that recreates the Hanooot ERP desktop shell and workflows from the supplied reference screens. The app ships without a login gate, uses English LTR navigation, and supports Arabic names/content in records.
+Production-oriented Next.js/TypeScript/Tailwind/Redux foundation that recreates the Hanooot ERP desktop shell and workflows from the supplied reference screens. The app includes a native demo sign-in gate, uses English-only LTR labels and demo data, and does not ship iframe or standalone HTML reference artifacts.
 
 ## Routes
 
@@ -11,6 +11,7 @@ Production-oriented Next.js/TypeScript/Tailwind/Redux foundation that recreates 
 ```bash
 npm install
 npm run lint
+npm run typecheck
 npm run test
 npm run build
 ```

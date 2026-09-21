@@ -13,14 +13,14 @@ export const dealStages: DealStage[] = ["Enquiry", "Contacted", "Sourcing reques
 export const orderStages: OrderStage[] = ["Payment", "Production", "Shipped", "Reached Iraq", "Delivered"]
 
 export const initialLeads: Lead[] = [
-  { id: "lead-1", name: "Mohammed Ghazi", phone: "+966 55 120 4421", source: "Facebook", campaign: "Ramadan-B", owner: "Rasha", stage: "Synced", value: 8400, attempts: 0, note: "China sourcing — asks for WhatsApp catalogue" },
-  { id: "lead-2", name: "شركة النور للتجارة", phone: "+966 54 771 2011", source: "Facebook", campaign: "Sourcing-A", owner: "Noor", stage: "Contacted", value: 14200, attempts: 2, note: "Arabic content wraps inside the English LTR shell" },
+  { id: "lead-1", name: "Mohammed Ghazi", phone: "+966 55 120 4421", source: "Facebook", campaign: "Ramadan-B", owner: "Rasha", stage: "Synced", value: 8400, attempts: 0, note: "China sourcing lead asks for a WhatsApp catalogue" },
+  { id: "lead-2", name: "Al Noor Trading", phone: "+966 54 771 2011", source: "Facebook", campaign: "Sourcing-A", owner: "Noor", stage: "Contacted", value: 14200, attempts: 2, note: "Needs supplier video before quote approval" },
   { id: "lead-3", name: "Omar Jafar", phone: "+971 50 663 9012", source: "Website", campaign: "Organic", owner: "Noor", stage: "Qualified", value: 3250, attempts: 1, note: "Ready to convert to deal" },
   { id: "lead-4", name: "Yousif Alazzawi", phone: "+964 770 122 9090", source: "DM", campaign: "Importing CN", owner: "Ali", stage: "Ghosted", value: 4300, attempts: 3, note: "Auto-retarget list after 3 tries" }
 ]
 
 export const initialDeals: Deal[] = [
-  { id: "deal-1", customer: "بيت القهوة", name: "Commercial blender lot", cn: "CN-24063", owner: "Rami", value: 11900, stage: "Enquiry", quoteItems: ["12 blenders", "Spare blades", "1-year service"], activity: ["Quote PDF generated", "WhatsApp template sent"] },
+  { id: "deal-1", customer: "Coffee House Group", name: "Commercial blender lot", cn: "CN-24063", owner: "Rami", value: 11900, stage: "Enquiry", quoteItems: ["12 blenders", "Spare blades", "1-year service"], activity: ["Quote PDF generated", "WhatsApp template sent"] },
   { id: "deal-2", customer: "Noura Trading", name: "LED panels 600 units", cn: "CN-24088", owner: "Noor", value: 19600, stage: "Contacted", quoteItems: ["600 LED panels", "Sea freight", "Customs estimate"], activity: ["Supplier video requested", "Zoho draft invoice ready"] },
   { id: "deal-3", customer: "Al Noor Hotels", name: "Ceramic dinnerware", cn: "CN-24072", owner: "Sara", value: 27400, stage: "Enquiry priced", quoteItems: ["4,000 plates", "Logo print", "QC inspection"], activity: ["Deposit 50% promised", "Add to sourcing funnel"] }
 ]
@@ -33,7 +33,7 @@ export const initialSourcing: SourcingRequest[] = [
 export const initialOrders: Order[] = [
   { id: "ord-1", cn: "CN-24072", dn: "DN-341", invoice: "ZB-1044", customer: "Al Noor Hotels", owner: "Sara", tracking: "HNT928118", stage: "Payment", duration: "2d", sender: "Ms. Li" },
   { id: "ord-2", cn: "CN-24088", dn: "DN-340", invoice: "ZB-1049", customer: "Noura Trading", owner: "Noor", tracking: "supplier quote due", stage: "Shipped", duration: "ETA 11d", sender: "Mr. Wang" },
-  { id: "ord-3", cn: "CN-24063", dn: "DN-338", invoice: "ZB-1028", customer: "بيت القهوة", owner: "Rami", tracking: "Closed", stage: "Delivered", duration: "Done", sender: "Rami" }
+  { id: "ord-3", cn: "CN-24063", dn: "DN-338", invoice: "ZB-1028", customer: "Coffee House Group", owner: "Rami", tracking: "Closed", stage: "Delivered", duration: "Done", sender: "Rami" }
 ]
 
 export const initialProducts: Product[] = [
@@ -44,8 +44,8 @@ export const initialProducts: Product[] = [
 ]
 
 export const contacts = [
-  ["Ahmed Al‑Najjar", "+966 55 120 4421", "Riyadh", "Facebook", "3 orders", "$8,400", "Active"],
-  ["شركة النور للتجارة", "+966 54 771 2011", "Jeddah", "Facebook", "2 orders", "$14,200", "Qualified"],
+  ["Ahmed Al-Najjar", "+966 55 120 4421", "Riyadh", "Facebook", "3 orders", "$8,400", "Active"],
+  ["Al Noor Trading", "+966 54 771 2011", "Jeddah", "Facebook", "2 orders", "$14,200", "Qualified"],
   ["Guangzhou Everbright", "+86 20 8821 4100", "Guangzhou", "Supplier", "9 orders", "¥82k", "Vendor"]
 ]
 
@@ -62,23 +62,23 @@ export const settingsSeed = {
 export const messagesSeed = [
   { who: "Noor", text: "@Chen please add supplier video for CN-24088 before tonight.", board: "Sourcing", ref: "CN-24088" },
   { who: "System", text: "Imported 18 Facebook leads from Ramadan-B. Facebook sync active.", board: "Leads", ref: "SYNC" },
-  { who: "Sara", text: "WhatsApp Arabic template sent: الشحنة قيد التجهيز", board: "Orders", ref: "CN-24072" }
+  { who: "Sara", text: "WhatsApp shipping template queued for the customer.", board: "Orders", ref: "CN-24072" }
 ]
 
 export const driveRows = [
   ["pdf", "CN-24072 quote.pdf", "Deal · Ceramic dinnerware · Sep 18", "Sara", "428 KB"],
   ["mp4", "Supplier video — inverter.mp4", "Sourcing · CN-24088 · Sep 17", "Chen", "21 MB"],
-  ["doc", "Legal retainer — شركة النور.docx", "Legal · Active matter", "Legal", "188 KB"]
+  ["doc", "Legal retainer — Al Noor Trading.docx", "Legal · Active matter", "Legal", "188 KB"]
 ]
 
 export const hrPeople = [
   ["Maya Khaled", "CRM Lead", "Sales", "Active", "$4,200", "$3,990"],
-  ["سارة منصور", "Account manager", "Trade operations", "Leave pending", "$3,900", "$3,705"],
+  ["Sara Mansour", "Account manager", "Trade operations", "Leave pending", "$3,900", "$3,705"],
   ["Chen Wei", "Supplier coordinator", "Sourcing", "Active", "$3,600", "$3,420"]
 ]
 
 export const legalMatters = [
   ["Al Noor Hotels", "Import contract review", "CRM", "$2,400", "Draft", "Lana"],
-  ["شركة النور للتجارة", "Client-services retainer", "Referral", "$4,800", "Active matter", "Omar"],
+  ["Al Noor Trading", "Client-services retainer", "Referral", "$4,800", "Active matter", "Omar"],
   ["Noura Trading", "Customs dispute", "Pipeline", "$3,100", "Needs attention", "Lana"]
 ]
